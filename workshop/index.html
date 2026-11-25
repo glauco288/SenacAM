@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Automatize sua rotina com o Claude | Senac Amazonas</title>
+<meta name="description" content="Oficina prática de 2 horas para usar o Claude na escrita, na análise de documentos e na organização de processos. 03/12, Auditório do Senac Amazonas.">
+<meta name="theme-color" content="#05080F">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Senac Amazonas">
+<meta property="og:title" content="Automatize sua rotina com o Claude | 03/12">
+<meta property="og:description" content="Oficina prática de 2 horas com o Claude. Auditório do Senac Amazonas, 03/12.">
+<meta property="og:image" content="https://glauco288.github.io/SenacAM/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05080F; --bg-2: #0A1224; --blue: #3D7BFF; --cyan: #34E0FF;
+    --orange: #FF7A00; --gold: #FFB400; --text: #EAF0FF; --muted: #8D9BB8;
+    --glass: rgba(255,255,255,.04); --line: rgba(120,160,255,.18);
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.6; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  button, input, select { font: inherit; }
+  .wrap { width: min(1120px, 92%); margin: 0 auto; position: relative; z-index: 2; }
+  .orb { font-family: "Orbitron", sans-serif; }
+
+  /* Fundo: grade em perspectiva */
+  .grid-floor { position: fixed; left: -50%; right: -50%; bottom: -10%; height: 70vh; z-index: 0; pointer-events: none;
+    background-image: linear-gradient(rgba(52,224,255,.22) 1px, transparent 1px), linear-gradient(90deg, rgba(52,224,255,.22) 1px, transparent 1px);
+    background-size: 60px 60px; transform: perspective(500px) rotateX(62deg); transform-origin: center bottom;
+    mask-image: linear-gradient(to top, #000 10%, transparent 80%); -webkit-mask-image: linear-gradient(to top, #000 10%, transparent 80%);
+    animation: scroll-grid 4s linear infinite; }
+  @keyframes scroll-grid { to { background-position: 0 60px; } }
+  .glow { position: fixed; inset: -20%; z-index: 0; pointer-events: none; opacity: .55;
+    background: radial-gradient(40% 30% at 15% 15%, rgba(61,123,255,.35), transparent 70%), radial-gradient(35% 30% at 85% 35%, rgba(255,122,0,.22), transparent 70%); }
+
+  header { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 50; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); background: rgba(5,8,15,.6); border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  header img { height: 40px; width: auto; background: #fff; padding: 5px 10px; border-radius: 10px; }
+  .btn-neon { padding: 9px 18px; border-radius: 999px; background: var(--orange); color: #fff; font-weight: 700; font-size: .92rem; box-shadow: 0 0 18px rgba(255,122,0,.55); }
+
+  /* Hero */
+  .hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 0 80px; text-align: center; position: relative; z-index: 2; }
+  .badge { display: inline-flex; gap: 10px; align-items: center; padding: 7px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--glass); font-size: .85rem; color: var(--muted); letter-spacing: .5px; }
+  .live { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); animation: pulse 1.4s infinite; }
+  @keyframes pulse { 50% { opacity: .25; } }
+  h1 { font-family: "Orbitron", sans-serif; font-weight: 900; font-size: clamp(2rem, 6vw, 4.4rem); line-height: 1.05; margin: 24px 0 18px; text-transform: uppercase; }
+  h1 .hl { background: linear-gradient(90deg, var(--cyan), var(--blue), var(--gold)); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 200% 100%; animation: shine 5s linear infinite; }
+  @keyframes shine { to { background-position: 200% 0; } }
+  .lead { color: var(--muted); font-size: clamp(1rem, 2vw, 1.2rem); max-width: 640px; margin: 0 auto 36px; }
+
+  /* Contador */
+  .countdown-label { font-size: .8rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .countdown { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .cd { width: 104px; padding: 18px 0 14px; border-radius: 18px; border: 1px solid var(--line); background: rgba(10,18,36,.75); backdrop-filter: blur(10px); box-shadow: 0 0 30px rgba(52,224,255,.12); }
+  .cd b { display: block; font-family: "Orbitron", sans-serif; font-size: 2.4rem; font-weight: 900; color: #fff; text-shadow: 0 0 18px rgba(52,224,255,.7); font-variant-numeric: tabular-nums; }
+  .cd span { font-size: .7rem; letter-spacing: 2px; color: var(--muted); }
+  .when { margin-top: 26px; color: var(--muted); font-size: .98rem; }
+  .when strong { color: var(--text); }
+  .cta { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 34px; }
+  .btn { padding: 15px 28px; border-radius: 14px; font-weight: 700; display: inline-block; transition: transform .2s, box-shadow .2s; cursor: pointer; border: 1px solid transparent; }
+  .btn:hover { transform: translateY(-3px); }
+  .btn-primary { background: linear-gradient(135deg, var(--orange), var(--gold)); color: #0A0F1C; box-shadow: 0 10px 30px rgba(255,122,0,.35); }
+  .btn-ghost { background: var(--glass); border-color: var(--line); color: var(--text); }
+
+  section { padding: 110px 0; position: relative; z-index: 2; }
+  .eyebrow { font-family: "Orbitron", sans-serif; font-size: .8rem; letter-spacing: 3px; color: var(--cyan); text-transform: uppercase; }
+  .title { font-family: "Orbitron", sans-serif; font-size: clamp(1.6rem, 3.6vw, 2.6rem); font-weight: 900; margin: 12px 0 14px; line-height: 1.15; }
+  .sub { color: var(--muted); max-width: 640px; margin: 0; }
+  .head { margin-bottom: 52px; }
+  .reveal { opacity: 0; transform: translateY(34px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* Pipeline animado */
+  .pipeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; align-items: center; position: relative; }
+  .node { position: relative; text-align: center; padding: 26px 16px; border-radius: 20px; border: 1px solid var(--line); background: rgba(10,18,36,.7); animation: lit 8s infinite; }
+  .node:nth-child(2) { animation-delay: 2s; }
+  .node:nth-child(3) { animation-delay: 4s; }
+  .node:nth-child(4) { animation-delay: 6s; }
+  @keyframes lit { 0%, 20%, 100% { border-color: var(--line); box-shadow: none; } 5%, 15% { border-color: var(--cyan); box-shadow: 0 0 30px rgba(52,224,255,.35); } }
+  .node .ic { font-size: 2rem; margin-bottom: 8px; }
+  .node h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .node p { margin: 0; color: var(--muted); font-size: .9rem; }
+  .arrow { color: var(--gold); font-size: 1.6rem; text-align: center; text-shadow: 0 0 12px rgba(255,180,0,.6); }
+
+  /* Público */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .card { padding: 28px 24px; border-radius: 22px; border: 1px solid var(--line); background: linear-gradient(160deg, rgba(255,255,255,.07), rgba(255,255,255,.01)); transition: transform .3s, border-color .3s; }
+  .card:hover { transform: translateY(-5px); border-color: rgba(255,180,0,.5); }
+  .card .ic { font-size: 1.8rem; margin-bottom: 12px; }
+  .card h3 { margin: 0 0 8px; font-size: 1.1rem; }
+  .card p { margin: 0; color: var(--muted); font-size: .94rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .chip { padding: 9px 16px; border-radius: 999px; border: 1px solid rgba(61,123,255,.4); background: rgba(61,123,255,.1); font-size: .9rem; }
+
+  /* Programa revelado */
+  .program { position: relative; }
+  .program-list { display: grid; gap: 14px; transition: filter .8s ease; }
+  .program.locked .program-list { filter: blur(10px); user-select: none; pointer-events: none; }
+  .slot { display: grid; grid-template-columns: 110px 1fr; gap: 20px; align-items: center; padding: 20px 24px; border-radius: 18px; border: 1px solid var(--line); background: rgba(10,18,36,.7); }
+  .slot .time { font-family: "Orbitron", sans-serif; color: var(--gold); font-size: .95rem; font-weight: 700; }
+  .slot h3 { margin: 0 0 4px; font-size: 1.05rem; }
+  .slot p { margin: 0; color: var(--muted); font-size: .92rem; }
+  .reveal-box { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; text-align: center; z-index: 3; }
+  .program.locked .reveal-box { display: flex; }
+  .reveal-box button { padding: 18px 30px; border-radius: 16px; border: 1px solid var(--gold); background: rgba(5,8,15,.85); color: var(--gold); font-family: "Orbitron", sans-serif; font-weight: 700; letter-spacing: 1px; cursor: pointer; box-shadow: 0 0 30px rgba(255,180,0,.3); transition: transform .2s; }
+  .reveal-box button:hover { transform: scale(1.04); }
+
+  /* Casos */
+  .cases { display: flex; flex-wrap: wrap; gap: 12px; }
+  .case { flex: 1 1 200px; padding: 18px 20px; border-radius: 16px; border-left: 3px solid var(--cyan); background: var(--glass); font-weight: 500; }
+
+  /* Formulário */
+  .contact { border-radius: 30px; padding: clamp(28px, 5vw, 56px); border: 1px solid var(--line); background: rgba(10,18,36,.75); backdrop-filter: blur(16px); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center; }
+  form { display: grid; gap: 14px; }
+  label { display: grid; gap: 6px; font-size: .88rem; color: var(--muted); font-weight: 500; }
+  input { color: var(--text); background: rgba(255,255,255,.04); border: 1px solid var(--line); padding: 13px 15px; border-radius: 12px; width: 100%; }
+  input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(255,180,0,.15); }
+  form button { font-weight: 700; padding: 15px; border: 0; border-radius: 14px; cursor: pointer; margin-top: 6px; background: linear-gradient(135deg, var(--orange), var(--gold)); color: #0A0F1C; transition: transform .2s; }
+  form button:hover { transform: translateY(-2px); }
+  form button:disabled { opacity: .7; cursor: default; transform: none; }
+  .note { font-size: .78rem; color: var(--muted); margin: 0; text-align: center; }
+
+  footer { border-top: 1px solid var(--line); padding: 40px 0; color: var(--muted); font-size: .9rem; position: relative; z-index: 2; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; align-items: center; }
+  footer img { height: 48px; width: auto; background: #fff; padding: 6px 12px; border-radius: 12px; }
+
+  @media (max-width: 900px) {
+    .pipeline { grid-template-columns: 1fr 1fr; gap: 14px; }
+    .arrow { display: none; }
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .cd { width: 76px; }
+    .cd b { font-size: 1.8rem; }
+    .slot { grid-template-columns: 1fr; gap: 6px; }
+    .pipeline { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-floor" aria-hidden="true"></div>
+<div class="glow" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap">
+    <a href="#top" aria-label="Senac Amazonas"><img src="senac-classico.png" alt="Senac Amazonas"></a>
+    <a href="#inscricao" class="btn-neon">Garantir minha vaga</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <span class="badge"><span class="live"></span> Oficina prática · 2 horas</span>
+      <h1>Automatize sua rotina<br><span class="hl">com o Claude</span></h1>
+      <p class="orb" style="color:var(--cyan);font-size:.95rem;letter-spacing:2px;margin:0 0 18px">INTELIGÊNCIA DE PROCESSOS COM CLOUD.AI</p>
+      <p class="lead">Aprenda a usar o Claude para escrever textos, analisar documentos e organizar processos do seu negócio, com demonstrações ao vivo.</p>
+
+      <div class="countdown-label" id="cdLabel">Falta pouco para começar</div>
+      <div class="countdown" id="countdown" aria-live="polite">
+        <div class="cd"><b id="d">--</b><span>DIAS</span></div>
+        <div class="cd"><b id="h">--</b><span>HORAS</span></div>
+        <div class="cd"><b id="m">--</b><span>MINUTOS</span></div>
+        <div class="cd"><b id="s">--</b><span>SEGUNDOS</span></div>
+      </div>
+
+      <p class="when"><strong>Quinta-feira, 03 de dezembro de 2026 · 19h</strong><br>Auditório da sede administrativa do Senac Amazonas</p>
+
+      <div class="cta">
+        <a href="#inscricao" class="btn btn-primary">Quero me inscrever →</a>
+        <a href="#programa" class="btn btn-ghost">Ver o programa</a>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="eyebrow">// O método</div>
+        <h2 class="title">Do processo manual ao automático</h2>
+        <p class="sub">Veja como uma rotina comum pode ser transformada em um fluxo que trabalha sozinho.</p>
+      </div>
+      <div class="pipeline reveal">
+        <div class="node"><div class="ic">📝</div><h3>Coleta</h3><p>Informações chegam por formulário digital.</p></div>
+        <div class="node"><div class="ic">☁️</div><h3>Nuvem</h3><p>Arquivos e dados organizados e compartilhados.</p></div>
+        <div class="node"><div class="ic">🤖</div><h3>Claude</h3><p>Analisa dados, escreve relatórios e sugere melhorias em segundos.</p></div>
+        <div class="node"><div class="ic">✅</div><h3>Aprovação</h3><p>Fluxos automáticos e notificações para a equipe.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="eyebrow">// Para quem é</div>
+        <h2 class="title">Feita para quem vive a rotina do comércio</h2>
+      </div>
+      <div class="cards reveal">
+        <article class="card"><div class="ic">🏪</div><h3>Donos e gestores</h3><p>Quem quer usar o Claude para responder clientes, organizar pedidos e decidir com mais rapidez.</p></article>
+        <article class="card"><div class="ic">🧾</div><h3>Administrativo e atendimento</h3><p>Quem quer usar o Claude para escrever e-mails, resumir documentos e organizar informações.</p></article>
+        <article class="card"><div class="ic">💡</div><h3>Curiosos por IA</h3><p>Quem quer aprender a usar o Claude de forma prática, sem precisar saber programar.</p></article>
+      </div>
+      <div class="chips reveal">
+        <span class="chip">Claude para textos</span><span class="chip">Claude para análises</span><span class="chip">Claude para planilhas</span><span class="chip">Claude para processos</span><span class="chip">Claude para atendimento</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="ministrante">
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="eyebrow">// Quem ministra</div>
+        <h2 class="title">Prof. Jaime Handa</h2>
+        <p class="sub">Conduz a oficina com demonstrações ao vivo do Claude, mostrando como aplicar a ferramenta no dia a dia do trabalho.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="programa">
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="eyebrow">// Programa</div>
+        <h2 class="title">O que vai acontecer em 2 horas com o Claude</h2>
+        <p class="sub">Um roteiro prático, com demonstrações ao vivo e desafios rápidos.</p>
+      </div>
+      <div class="program locked" id="program">
+        <div class="program-list">
+          <div class="slot"><div class="time">15 MIN</div><div><h3>Abertura</h3><p>Apresentação e desafios de produtividade. Quem já usa IA no trabalho?</p></div></div>
+          <div class="slot"><div class="time">30 MIN</div><div><h3>Organização e colaboração</h3><p>Como deixar documentos e informações prontos para o Claude analisar.</p></div></div>
+          <div class="slot"><div class="time">35 MIN</div><div><h3>Claude na prática</h3><p>Textos, resumos e análises com demonstrações ao vivo, usando casos reais do comércio.</p></div></div>
+          <div class="slot"><div class="time">25 MIN</div><div><h3>Automatizando processos com o Claude</h3><p>Como estruturar formulários, fluxos e rotinas repetitivas para ganhar tempo.</p></div></div>
+          <div class="slot"><div class="time">15 MIN</div><div><h3>Encerramento</h3><p>Identificação de oportunidades para aplicar no seu negócio e avaliação da oficina.</p></div></div>
+        </div>
+        <div class="reveal-box">
+          <button id="revealBtn" type="button">🔓 REVELAR PROGRAMA</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="eyebrow">// Aplicação imediata</div>
+        <h2 class="title">Use o Claude já no seu negócio</h2>
+      </div>
+      <div class="cases reveal">
+        <div class="case">Controle de pedidos</div>
+        <div class="case">Registro de atendimentos</div>
+        <div class="case">Gestão de estoque</div>
+        <div class="case">Pesquisas de satisfação</div>
+        <div class="case">Comunicação entre equipes</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="inscricao">
+    <div class="wrap">
+      <div class="contact reveal">
+        <div class="contact-grid">
+          <div>
+            <div class="eyebrow">// Garanta sua vaga</div>
+            <h2 class="title" style="font-size: clamp(1.6rem,3.2vw,2.3rem)">Reserve seu lugar na oficina</h2>
+            <p class="sub">Preencha o formulário e nossa equipe confirma sua inscrição e envia as informações da oficina com o Claude.</p>
+          </div>
+          <form id="lead">
+            <input type="hidden" name="evento" value="Oficina Inteligência de Processos com Cloud.AI - 03/12/2026">
+            <label>Nome completo
+              <input type="text" name="nome" placeholder="Seu nome" required>
+            </label>
+            <label>E-mail
+              <input type="email" name="email" placeholder="voce@email.com" required>
+            </label>
+            <label>WhatsApp
+              <input type="tel" name="telefone" placeholder="(00) 00000-0000" required>
+            </label>
+            <label>Empresa ou profissão (opcional)
+              <input type="text" name="empresa" placeholder="Ex.: Loja de roupas · Auxiliar administrativo">
+            </label>
+            <button type="submit">Quero participar da oficina</button>
+            <p class="note">Seus dados são usados apenas para a organização da oficina.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="senac-classico.png" alt="Senac Amazonas">
+    <div>© 2026 Senac Amazonas · Auditório da sede administrativa</div>
+  </div>
+</footer>
+
+<script>
+  // Contador regressivo até o evento (horário de Manaus)
+  const EVENTO = new Date('2026-12-03T19:00:00-04:00');
+  (function () {
+    const el = { d: document.getElementById('d'), h: document.getElementById('h'), m: document.getElementById('m'), s: document.getElementById('s') };
+    const label = document.getElementById('cdLabel');
+    const pad = (n) => String(n).padStart(2, '0');
+    function tick() {
+      const diff = EVENTO - new Date();
+      if (diff <= 0) {
+        label.textContent = 'A oficina está acontecendo agora';
+        document.getElementById('countdown').style.display = 'none';
+        clearInterval(timer);
+        return;
+      }
+      el.d.textContent = pad(Math.floor(diff / 86400000));
+      el.h.textContent = pad(Math.floor(diff / 3600000) % 24);
+      el.m.textContent = pad(Math.floor(diff / 60000) % 60);
+      el.s.textContent = pad(Math.floor(diff / 1000) % 60);
+    }
+    tick();
+    const timer = setInterval(tick, 1000);
+  })();
+
+  // Programa bloqueado até o visitante revelar
+  (function () {
+    const prog = document.getElementById('program');
+    const btn = document.getElementById('revealBtn');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { prog.classList.remove('locked'); return; }
+    btn.addEventListener('click', () => prog.classList.remove('locked'));
+  })();
+
+  // Revelar ao rolar
+  (function () {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: .15 });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  })();
+
+  // Formulário: envia para o Formspree (mesmo endpoint da landing principal)
+  const ENDPOINT = 'https://formspree.io/f/xqpqbwro';
+  document.getElementById('lead').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const btn = form.querySelector('button');
+    btn.disabled = true; btn.textContent = 'Enviando...';
+    try {
+      const res = await fetch(ENDPOINT, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error('falha no envio');
+      form.reset();
+      btn.textContent = 'Vaga reservada! Até 03/12 ✓';
+    } catch (err) {
+      btn.textContent = 'Erro ao enviar. Tente novamente';
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
