@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Automatize sua rotina com Claude.IA | Senac Amazonas</title>
+<meta name="description" content="Oficina gratuita para colaboradores de TI, Telecomunicação e Comunicação. 03/12/2026, das 19h às 21h, no Auditório Senac Amazonas.">
+<meta name="theme-color" content="#0A0A0E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Senac Amazonas">
+<meta property="og:title" content="Automatize sua rotina com Claude.IA | 03/12">
+<meta property="og:description" content="Oficina gratuita, das 19h às 21h. Auditório Senac Amazonas.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0A0E; --bg2: #14141C; --card: #1A1A24; --line: rgba(255,255,255,.1);
+    --red: #E3213A; --red2: #FF3B54; --white: #F5F5F7; --mute: #A3A3B2;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+  body { margin: 0; background: var(--bg); color: var(--white); font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.55; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  button, input { font: inherit; }
+  .wrap { width: min(1120px, 92%); margin: 0 auto; position: relative; z-index: 2; }
+
+  .glow { position: fixed; inset: -20%; z-index: 0; pointer-events: none;
+    background: radial-gradient(40% 35% at 80% 10%, rgba(227,33,58,.28), transparent 70%), radial-gradient(35% 30% at 10% 70%, rgba(227,33,58,.14), transparent 70%); }
+
+  header { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 50; background: rgba(10,10,14,.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  header img { height: 34px; width: auto; }
+  .btn-red { padding: 10px 18px; border-radius: 10px; background: var(--red); color: #fff; font-weight: 800; font-size: .88rem; letter-spacing: .3px; }
+
+  .hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 0 80px; position: relative; z-index: 2; }
+  .topbar { display: flex; flex-wrap: wrap; align-items: stretch; margin-bottom: 42px; }
+  .urgent { background: var(--red); color: #fff; font-weight: 900; font-size: .95rem; line-height: 1.2; padding: 16px 20px; text-transform: uppercase; letter-spacing: .5px; }
+  .segment { border-left: 2px solid var(--line); margin-left: 20px; padding-left: 20px; color: var(--mute); font-size: .85rem; font-weight: 600; display: flex; align-items: center; }
+  .pill { display: inline-flex; align-items: center; gap: 12px; font-size: .78rem; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; }
+  .pill b { background: #fff; color: var(--red); padding: 6px 14px; border-radius: 999px; letter-spacing: 1px; }
+  h1 { font-size: clamp(2.2rem, 6vw, 4.6rem); line-height: 1.05; font-weight: 800; margin: 22px 0 6px; letter-spacing: -.02em; }
+  h1 .big { display: block; color: var(--red); font-style: italic; font-weight: 900; font-size: clamp(3rem, 10vw, 7.6rem); line-height: .95; letter-spacing: -.04em; text-shadow: 0 0 40px rgba(227,33,58,.35); }
+  .lead { font-size: 1.08rem; color: var(--mute); max-width: 620px; margin: 22px 0 28px; }
+  .info { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 26px; }
+  .info span { display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 12px; border: 1px solid var(--line); background: var(--card); font-weight: 700; font-size: .95rem; }
+  .info span::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--red); box-shadow: 0 0 10px var(--red); }
+  .exclusive { display: inline-block; max-width: 620px; padding: 16px 22px; border-radius: 14px; border: 2px solid var(--red); color: var(--white); font-weight: 600; font-size: .98rem; margin-bottom: 30px; }
+  .exclusive strong { color: var(--red2); }
+  .cta { display: flex; flex-wrap: wrap; gap: 14px; }
+  .btn { padding: 17px 32px; border-radius: 12px; font-weight: 800; font-size: 1rem; display: inline-block; transition: transform .2s, box-shadow .2s; border: 2px solid transparent; }
+  .btn:hover { transform: translateY(-3px); }
+  .btn-primary { background: var(--red); color: #fff; box-shadow: 0 12px 30px rgba(227,33,58,.4); }
+  .btn-primary:hover { box-shadow: 0 16px 40px rgba(227,33,58,.6); }
+  .btn-ghost { border-color: var(--line); color: var(--white); background: transparent; }
+
+  .countdown-label { font-size: .8rem; letter-spacing: 3px; text-transform: uppercase; color: var(--red2); font-weight: 800; margin: 46px 0 14px; }
+  .countdown { display: flex; gap: 12px; flex-wrap: wrap; }
+  .cd { width: 96px; padding: 16px 0 12px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); text-align: center; }
+  .cd b { display: block; font-size: 2.2rem; font-weight: 900; font-variant-numeric: tabular-nums; }
+  .cd span { font-size: .66rem; letter-spacing: 2px; color: var(--mute); font-weight: 700; }
+
+  section { padding: 100px 0; position: relative; z-index: 2; }
+  .eyebrow { font-size: .8rem; letter-spacing: 3px; color: var(--red2); text-transform: uppercase; font-weight: 800; }
+  .title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; margin: 12px 0 14px; line-height: 1.15; letter-spacing: -.02em; }
+  .sub { color: var(--mute); max-width: 640px; margin: 0; }
+  .head { margin-bottom: 48px; }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  .speaker { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: end; }
+  .speaker img { width: 100%; max-width: 420px; justify-self: center; display: block; filter: drop-shadow(0 20px 40px rgba(0,0,0,.6)); }
+  .speaker h2 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 900; margin: 10px 0 16px; line-height: 1.05; letter-spacing: -.02em; }
+  .speaker h2 span { color: var(--red); }
+  .speaker p { color: var(--mute); font-size: 1.04rem; }
+  .speaker .role { display: inline-block; background: var(--red); color: #fff; font-weight: 800; font-size: .8rem; letter-spacing: 1.5px; padding: 8px 14px; border-radius: 8px; text-transform: uppercase; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .card { padding: 30px 26px; border-radius: 18px; background: var(--card); border: 1px solid var(--line); border-top: 3px solid var(--red); }
+  .card h3 { margin: 0 0 8px; font-size: 1.12rem; font-weight: 800; }
+  .card p { margin: 0; color: var(--mute); font-size: .95rem; }
+
+  .program { position: relative; }
+  .program-list { display: grid; gap: 12px; transition: filter .8s ease; }
+  .program.locked .program-list { filter: blur(10px); pointer-events: none; user-select: none; }
+  .slot { display: grid; grid-template-columns: 120px 1fr; gap: 20px; align-items: center; padding: 22px 26px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); }
+  .slot .time { color: var(--red2); font-weight: 900; font-size: .95rem; letter-spacing: .5px; }
+  .slot h3 { margin: 0 0 4px; font-size: 1.05rem; font-weight: 800; }
+  .slot p { margin: 0; color: var(--mute); font-size: .93rem; }
+  .reveal-box { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; z-index: 3; }
+  .program.locked .reveal-box { display: flex; }
+  .reveal-box button { padding: 18px 30px; border-radius: 14px; border: 2px solid var(--red); background: rgba(10,10,14,.9); color: #fff; font-weight: 900; letter-spacing: 1px; cursor: pointer; box-shadow: 0 0 40px rgba(227,33,58,.35); }
+  .reveal-box button:hover { transform: scale(1.04); }
+
+  .uses { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+  .use { padding: 22px; border-radius: 14px; border: 1px solid var(--line); background: var(--bg2); font-weight: 700; display: flex; align-items: center; gap: 12px; }
+  .use::before { content: ""; width: 10px; height: 10px; background: var(--red); border-radius: 2px; flex-shrink: 0; }
+
+  .contact { border-radius: 26px; padding: clamp(28px, 5vw, 56px); background: var(--card); border: 1px solid var(--line); position: relative; overflow: hidden; }
+  .contact::before { content: ""; position: absolute; top: -120px; right: -120px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(227,33,58,.45), transparent 70%); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center; position: relative; }
+  form { display: grid; gap: 14px; }
+  label { display: grid; gap: 6px; font-size: .85rem; color: var(--mute); font-weight: 700; }
+  input { color: var(--white); background: var(--bg); border: 1px solid var(--line); padding: 14px 16px; border-radius: 10px; width: 100%; font-weight: 500; }
+  input:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 4px rgba(227,33,58,.2); }
+  form button { font-weight: 900; padding: 17px; border: 0; border-radius: 12px; cursor: pointer; margin-top: 6px; background: var(--red); color: #fff; font-size: 1rem; transition: transform .2s, box-shadow .2s; box-shadow: 0 12px 30px rgba(227,33,58,.35); }
+  form button:hover { transform: translateY(-2px); }
+  form button:disabled { opacity: .7; cursor: default; transform: none; }
+  .note { font-size: .76rem; color: var(--mute); margin: 0; text-align: center; }
+
+  footer { border-top: 1px solid var(--line); padding: 40px 0; color: var(--mute); font-size: .85rem; position: relative; z-index: 2; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; align-items: center; }
+  footer img { height: 46px; width: auto; }
+
+  @media (max-width: 900px) {
+    .speaker, .contact-grid { grid-template-columns: 1fr; }
+    .speaker img { max-width: 300px; }
+    .segment { border-left: none; margin-left: 0; padding-left: 0; }
+  }
+  @media (max-width: 520px) {
+    .cd { width: 74px; }
+    .cd b { font-size: 1.7rem; }
+    .slot { grid-template-columns: 1fr; gap: 6px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="glow" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap">
+    <a href="#top" aria-label="Senac Amazonas"><img src="/_blob/24b0e09c8de94e339c82cf024cf614b2" alt="Senac, Fecomércio Sesc e 80 anos"></a>
+    <a href="#inscricao" class="btn-red">Inscreva-se</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div class="topbar">
+        <div class="urgent">Última oportunidade<br>de 2026!</div>
+        <div class="segment">Tecnologia da Informação, Comunicação e Telecomunicações</div>
+      </div>
+
+      <span class="pill"><b>Oficina gratuita</b></span>
+      <h1>Automatize sua rotina com<span class="big">Claude.IA</span></h1>
+      <p class="lead">Descubra como a tecnologia em nuvem pode otimizar processos, reduzir tarefas e aumentar a produtividade.</p>
+
+      <div class="info">
+        <span>03/12/2026</span>
+        <span>19h às 21h</span>
+        <span>Auditório Senac Amazonas</span>
+      </div>
+      <p class="exclusive">Exclusiva para colaboradores das empresas de <strong>TI, Telecomunicação e Comunicação</strong>.</p>
+
+      <div class="cta">
+        <a href="#inscricao" class="btn btn-primary">Inscreva-se</a>
+        <a href="#programa" class="btn btn-ghost">Ver o programa</a>
+      </div>
+
+      <div class="countdown-label" id="cdLabel">Começa em</div>
+      <div class="countdown" id="countdown" aria-live="polite">
+        <div class="cd"><b id="d">--</b><span>DIAS</span></div>
+        <div class="cd"><b id="h">--</b><span>HORAS</span></div>
+        <div class="cd"><b id="m">--</b><span>MIN</span></div>
+        <div class="cd"><b id="s">--</b><span>SEG</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap speaker">
+      <div class="reveal"><img src="/_blob/94a0be09d0d8caf3625300a704626dc9" alt="Especialista Jaime Handa"></div>
+      <div class="reveal">
+        <span class="role">Especialista</span>
+        <h2>Jaime <span>Handa</span></h2>
+        <p>Conduz a oficina com demonstrações práticas do Claude.IA, mostrando como aplicar a ferramenta na rotina de trabalho de TI, telecomunicações e comunicação.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="eyebrow">// Para quem é</div>
+        <h2 class="title">Feita para o seu setor</h2>
+        <p class="sub">Vagas exclusivas para colaboradores das empresas de TI, Telecomunicação e Comunicação.</p>
+      </div>
+      <div class="cards reveal">
+        <article class="card"><h3>Tecnologia da Informação</h3><p>Times de desenvolvimento, infraestrutura e suporte que querem ganhar tempo em rotinas e documentação.</p></article>
+        <article class="card"><h3>Telecomunicações</h3><p>Equipes de operação, atendimento e planejamento que precisam organizar processos e relatórios com agilidade.</p></article>
+        <article class="card"><h3>Comunicação</h3><p>Profissionais de conteúdo, marketing e relacionamento que querem produzir mais com menos esforço.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="programa">
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="eyebrow">// Programa</div>
+        <h2 class="title">2 horas de prática com o Claude.IA</h2>
+        <p class="sub">Das 19h às 21h, com demonstrações ao vivo e desafios rápidos.</p>
+      </div>
+      <div class="program locked" id="program">
+        <div class="program-list">
+          <div class="slot"><div class="time">15 MIN</div><div><h3>Abertura</h3><p>Apresentação e desafios de produtividade no seu setor.</p></div></div>
+          <div class="slot"><div class="time">30 MIN</div><div><h3>Nuvem e organização</h3><p>Como deixar documentos e informações prontos para o Claude.IA analisar.</p></div></div>
+          <div class="slot"><div class="time">35 MIN</div><div><h3>Claude.IA na prática</h3><p>Textos, resumos e análises com demonstrações ao vivo.</p></div></div>
+          <div class="slot"><div class="time">25 MIN</div><div><h3>Automação de processos</h3><p>Formulários, fluxos e rotinas repetitivas que podem ser automatizadas.</p></div></div>
+          <div class="slot"><div class="time">15 MIN</div><div><h3>Encerramento</h3><p>Identificação de oportunidades para aplicar no seu trabalho e avaliação.</p></div></div>
+        </div>
+        <div class="reveal-box">
+          <button id="revealBtn" type="button">REVELAR PROGRAMA</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head reveal">
+        <div class="eyebrow">// Aplicação imediata</div>
+        <h2 class="title">Use o Claude.IA já no seu trabalho</h2>
+      </div>
+      <div class="uses reveal">
+        <div class="use">Escrever relatórios e e-mails</div>
+        <div class="use">Analisar documentos e planilhas</div>
+        <div class="use">Organizar processos e fluxos</div>
+        <div class="use">Resumir reuniões e decisões</div>
+        <div class="use">Criar conteúdo para comunicação</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="inscricao">
+    <div class="wrap">
+      <div class="contact reveal">
+        <div class="contact-grid">
+          <div>
+            <div class="eyebrow">// Inscreva-se</div>
+            <h2 class="title" style="font-size: clamp(1.8rem,3.4vw,2.5rem)">Garanta sua vaga gratuita</h2>
+            <p class="sub">Preencha o formulário e nossa equipe confirma sua inscrição e envia as informações do evento.</p>
+          </div>
+          <form id="lead">
+            <input type="hidden" name="evento" value="Oficina Automatize sua rotina com Claude.IA - 03/12/2026 19h às 21h">
+            <label>Nome completo
+              <input type="text" name="nome" placeholder="Seu nome" required>
+            </label>
+            <label>E-mail
+              <input type="email" name="email" placeholder="voce@empresa.com" required>
+            </label>
+            <label>WhatsApp
+              <input type="tel" name="telefone" placeholder="(00) 00000-0000" required>
+            </label>
+            <label>Empresa
+              <input type="text" name="empresa" placeholder="Nome da empresa" required>
+            </label>
+            <label>Cargo (opcional)
+              <input type="text" name="cargo" placeholder="Ex.: Analista de suporte">
+            </label>
+            <button type="submit">Quero me inscrever</button>
+            <p class="note">Oficina exclusiva para colaboradores das empresas de TI, Telecomunicação e Comunicação.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="/_blob/24b0e09c8de94e339c82cf024cf614b2" alt="Senac, Fecomércio Sesc e 80 anos">
+    <div>© 2026 Senac Amazonas · Fecomércio Sesc</div>
+  </div>
+</footer>
+
+<script>
+  // Contador até 03/12/2026 às 19h (horário de Manaus)
+  const EVENTO = new Date('2026-12-03T19:00:00-04:00');
+  (function () {
+    const el = { d: document.getElementById('d'), h: document.getElementById('h'), m: document.getElementById('m'), s: document.getElementById('s') };
+    const label = document.getElementById('cdLabel');
+    const pad = (n) => String(n).padStart(2, '0');
+    function tick() {
+      const diff = EVENTO - new Date();
+      if (diff <= 0) {
+        label.textContent = 'A oficina está acontecendo agora';
+        document.getElementById('countdown').style.display = 'none';
+        clearInterval(timer);
+        return;
+      }
+      el.d.textContent = pad(Math.floor(diff / 86400000));
+      el.h.textContent = pad(Math.floor(diff / 3600000) % 24);
+      el.m.textContent = pad(Math.floor(diff / 60000) % 60);
+      el.s.textContent = pad(Math.floor(diff / 1000) % 60);
+    }
+    tick();
+    const timer = setInterval(tick, 1000);
+  })();
+
+  // Programa revelado sob demanda
+  (function () {
+    const prog = document.getElementById('program');
+    const btn = document.getElementById('revealBtn');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { prog.classList.remove('locked'); return; }
+    btn.addEventListener('click', () => prog.classList.remove('locked'));
+  })();
+
+  // Revelar ao rolar
+  (function () {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: .15 });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  })();
+
+  // Formulário: envia para o Formspree
+  const ENDPOINT = 'https://formspree.io/f/xqpqbwro';
+  document.getElementById('lead').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const btn = form.querySelector('button');
+    btn.disabled = true; btn.textContent = 'Enviando...';
+    try {
+      const res = await fetch(ENDPOINT, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error('falha no envio');
+      form.reset();
+      btn.textContent = 'Inscrição recebida! ✓';
+    } catch (err) {
+      btn.textContent = 'Erro ao enviar. Tente novamente';
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
